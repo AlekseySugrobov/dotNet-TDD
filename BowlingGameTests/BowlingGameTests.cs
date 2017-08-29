@@ -34,12 +34,52 @@ namespace BowlingGameTests
             Assert.AreEqual(20, game.Score);
         }
 
+        [Test]
+        public void TestOneSpare()
+        {
+            game = new Game();
+            RollSpare();
+            game.Roll(3);
+            RollPins(17, 0);
+            Assert.AreEqual(16, game.Score);
+        }
+
+        [Test]
+        public void TestOneString()
+        {
+            game = new Game();
+            RollStrike();
+            game.Roll(3);
+            game.Roll(4);
+            RollPins(16,0);
+            Assert.AreEqual(24, game.Score);
+        }
+
+        [Test]
+        public void TestPerfectGame()
+        {
+            game = new Game();
+            RollPins(12,10);
+            Assert.AreEqual(300, game.Score);
+        }
+
         private void RollPins(int numberOfRolls, int pinsHitPerRoll)
         {
             for (var i = 0; i < numberOfRolls; i++)
             {
                 game.Roll(pinsHitPerRoll);
             }
+        }
+
+        private void RollStrike()
+        {
+            game.Roll(10);
+        }
+
+        private void RollSpare()
+        {
+            game.Roll(5);
+            game.Roll(5);
         }
     }
 }
